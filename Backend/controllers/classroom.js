@@ -53,21 +53,20 @@ export let getClassroom = async (req, res, next) => {
     }
     if (
       classroom.author.toString() !== req.userId ||
-      classroom.teachers.findIndex((val) => val.toString() == req.userId) !==
-        -1 ||
-      classroom.students.findIndex((val) => val.toString() == req.userId) !== -1
+      classroom.teachers.includes(userId) ||
+      classroom.students.includes(userId)
     ) {
       const error = new Error('Unauthorized');
       error.statusCode = 403;
       throw error;
     }
-    res.status(200).json({message: 'Class Fetched', classroom=classroom})
+    res.status(200).json({ message: 'Class Fetched', classroom: classroom });
   } catch (err) {
     next(err);
   }
 };
 
-export let editClassroom = async(req, res, next) => {
+export let editClassroom = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
   const classId = req.params.classid;
@@ -81,28 +80,27 @@ export let editClassroom = async(req, res, next) => {
     }
     if (
       classroom.author.toString() !== req.userId ||
-      classroom.teachers.findIndex((val) => val.toString() == req.userId) !==
-        -1 ||
-      classroom.students.findIndex((val) => val.toString() == req.userId) !== -1
+      classroom.teachers.includes(userId) ||
+      classroom.students.includes(userId)
     ) {
       const error = new Error('Unauthorized');
       error.statusCode = 403;
       throw error;
     }
-    if (!title){
+    if (!title) {
       title = classroom.title;
     }
-    if (!description){
+    if (!description) {
       description = classroom.description;
-    } 
+    }
     const result = await Classroom.save();
-    res.status(200).json({message: "Post Updated", classroom: result})
-  } catch(err){
-    next(err)
+    res.status(200).json({ message: 'Post Updated', classroom: result });
+  } catch (err) {
+    next(err);
   }
-}
+};
 
-export let deleteClassroom = async(req,res,next)=>{
+export let deleteClassroom = async (req, res, next) => {
   const classId = req.params.classid;
 
   try {
@@ -114,17 +112,16 @@ export let deleteClassroom = async(req,res,next)=>{
     }
     if (
       classroom.author.toString() !== req.userId ||
-      classroom.teachers.findIndex((val) => val.toString() == req.userId) !==
-        -1 ||
-      classroom.students.findIndex((val) => val.toString() == req.userId) !== -1
+      classroom.teachers.includes(userId) ||
+      classroom.students.includes(userId)
     ) {
       const error = new Error('Unauthorized');
       error.statusCode = 403;
       throw error;
     }
     await Classroom.findByIdAndRemove(classId);
-    res.status(200).json({message: "Classroom Successfully Deleted"})
-  } catch(err){
-    next(err)
+    res.status(200).json({ message: 'Classroom Successfully Deleted' });
+  } catch (err) {
+    next(err);
   }
-}
+};
