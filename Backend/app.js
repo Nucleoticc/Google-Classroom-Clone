@@ -4,12 +4,14 @@ import dotenv from 'dotenv';
 
 import authRoutes from './routes/auth.js';
 import classRoomRoutes from './routes/classroom.js';
+import multerHelper from './middleware/file_helper.js';
 
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
+app.use(multerHelper);
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

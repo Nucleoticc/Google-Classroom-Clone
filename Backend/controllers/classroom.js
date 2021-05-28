@@ -43,7 +43,7 @@ export let getClassrooms = async (req, res, next) => {
 };
 
 export let getClassroom = async (req, res, next) => {
-  const classId = req.params.classid;
+  const classId = req.params.classId;
   try {
     const classroom = await Classroom.findById(classId);
     if (!classroom) {
@@ -69,7 +69,7 @@ export let getClassroom = async (req, res, next) => {
 export let editClassroom = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
-  const classId = req.params.classid;
+  const classId = req.params.classId;
 
   try {
     const classroom = await Classroom.findById(classId);
@@ -101,7 +101,7 @@ export let editClassroom = async (req, res, next) => {
 };
 
 export let deleteClassroom = async (req, res, next) => {
-  const classId = req.params.classid;
+  const classId = req.params.classId;
 
   try {
     const classroom = await Classroom.findById(classId);

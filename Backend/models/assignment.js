@@ -16,16 +16,18 @@ const assignmentSchema = new Schema({
         required: true,
         ref: 'Classroom'
     },
-    attachmentUrl: {
-        type: Array,
-        required: false
-    },
+    attachmentUrls: [
+        {
+            type: String,
+            required: false
+        }
+    ],
     author: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: 'User'
     },
-    due_date: {
+    dueDate: {
         type: Date,
         required: false
     }
