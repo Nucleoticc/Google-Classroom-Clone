@@ -66,7 +66,7 @@ export let getClassroom = async (req, res, next) => {
   }
 };
 
-export let editClassroom = async (req, res, next) => {
+export let updateClassroom = async (req, res, next) => {
   const title = req.body.title;
   const description = req.body.description;
   const classId = req.params.classId;
