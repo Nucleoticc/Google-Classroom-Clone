@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 import authRoutes from './routes/auth.js';
-import classRoomRoutes from './routes/classroom.js';
+import classroomRoutes from './routes/classroom.js';
+import assignmentRoutes from './routes/assignment.js';
+import announcementRoutes from './routes/announcement.js';
 import multerHelper from './middleware/file_helper.js';
 
 dotenv.config();
@@ -24,7 +26,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', authRoutes);
-app.use('/class', classRoomRoutes);
+app.use('/class', classroomRoutes);
+app.use('/assign', assignmentRoutes);
+app.use('/announce', announcementRoutes);
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
   const message = error.message;

@@ -23,8 +23,7 @@ export let addAnnouncement = async (req, res, next) => {
     const classroomId = classroom._id;
     const author = mongoose.Types.ObjectId(req.userId);
     const announcement = new Announcement({
-      title,
-      description,
+      content,
       class: classroomId,
       author,
     });
@@ -34,7 +33,9 @@ export let addAnnouncement = async (req, res, next) => {
     const result = await announcement.save();
     classroom.announcements.push(announcement);
     await classroom.save();
-    res.status(201).json({ message: 'Announcement Created', announcement: result });
+    res
+      .status(201)
+      .json({ message: 'Announcement Created', announcement: result });
   } catch (err) {
     next(err);
   }
@@ -68,8 +69,7 @@ export let updateAnnouncement = async (req, res, next) => {
       error.statusCode = 403;
       throw error;
     }
-    announcement.title = req.body.title;
-    announcement.description = req.body.description;
+    announcement.content = req.body.content;
     if (req.body.dueDate) {
       announcement.dueDate = req.body.dueDate;
     }
@@ -80,7 +80,9 @@ export let updateAnnouncement = async (req, res, next) => {
       announcement.attachmentUrls = req.files.map((val) => val);
     }
     const result = await announcement.save();
-    res.status(200).json({ message: 'Announcement Updated', announcement: result });
+    res
+      .status(200)
+      .json({ message: 'Announcement Updated', announcement: result });
   } catch (err) {
     next(err);
   }
@@ -116,7 +118,7 @@ export let deleteAnnouncement = async (req, res, next) => {
     classroom.announcement.pull(announcementId);
     await classroom.save();
 
-    res.status(200).json({ message: 'Announcement Deleted'});
+    res.status(200).json({ message: 'Announcement Deleted' });
   } catch (err) {
     next(err);
   }
